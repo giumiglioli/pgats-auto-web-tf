@@ -117,7 +117,7 @@ describe('Automation Exercise Testing Not Logged In', () => {
     
     }); // it
 
-    it.only(' TEST 08 - VERIFY ALL PRODUCTS AND PRODUCT DETAILS', () => {
+    it(' TEST 08 - VERIFY ALL PRODUCTS AND PRODUCT DETAILS', () => {
         
         cy.get('i.fa-home').parent().should('contain.text', 'Home');
         //Access Products page
