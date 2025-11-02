@@ -5,19 +5,20 @@ on:
 
 jobs:
   e2e-tests:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
-    #clone the project to the machine
-    - uses: actions/checkout@V4
+    steps:
+      # clone the project to the machine
+      - uses: actions/checkout@v4
 
-    #check the node version installed
-    - name: Node Version
-      run: node --version
-    #Installing the project dependencies
-    - name: Installing dependencies
-      run: npm install
-    #Running the tests created in headless mode 
-    - name: Running the tests
-      run: npx cypress run
-      
+      # check the node version installed
+      - name: Node Version
+        run: node --version
+
+      # Installing the project dependencies
+      - name: Installing dependencies
+        run: npm install
+
+      # Running the tests created in headless mode 
+      - name: Running the tests
+        run: npx cypress run
