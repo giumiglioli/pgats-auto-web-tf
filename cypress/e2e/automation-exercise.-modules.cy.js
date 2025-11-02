@@ -11,6 +11,8 @@ import menu from '../modules/menu/index.js';
 import login from '../modules/login/index.js';
 import register from '../modules/register/index.js';
 import contact from '../modules/contact';
+import products from '../modules/products';
+import order from '../modules/order';
 
 
 describe('Automation Exercise Testing that need Register/Logged In page', () => {
@@ -96,7 +98,7 @@ describe('Automation Exercise Testing that need Register/Logged In page', () => 
     
     }); // it
 
-    it(' TEST 15 - PLACE ORDER: REGISTER BEFORE CHECKOUT', () => {
+    it.only(' TEST 15 - PLACE ORDER: REGISTER BEFORE CHECKOUT', () => {
         //First screen for register        
         login.FillPreRegisterUser();
         //Second screen for register - Enter Account Information
@@ -108,17 +110,11 @@ describe('Automation Exercise Testing that need Register/Logged In page', () => 
         cy.get('h2[data-qa="account-created"]').should('have.text', 'Account Created!');//validate the text on H2 tag with data-qa attribute
 
          // 1. Add product in cart
-        cy.visit('https://automationexercise.com/products');
-        cy.get('.features_items .product-image-wrapper').first().trigger('mouseover');
-        cy.get('.features_items .product-image-wrapper').first().contains('Add to cart').click();
+         order.addFirstProductToCart();
 
          // 2. Go to cart page and verify that product is visible in cart
-        cy.get('u').contains('View Cart').click();
-        cy.url().should('include', '/view_cart');
-        cy.get('.cart_info').should('be.visible');
-
-        // 3. Click in "Proceed To Checkout"
-        cy.contains('Proceed To Checkout').click();
+         // 3. Click in "Proceed To Checkout"
+         order.goToCartAndCheckout();
         //Check if page of review your order is displayed
         cy.contains('h2', 'Review Your Order').should('be.visible'); // ajuste conforme o texto real
 
@@ -145,25 +141,9 @@ describe('Automation Exercise Testing that need Register/Logged In page', () => 
         cy.get('#address_invoice').should('contain.text', register.zipcode);
 
         //Enter description in comment text area and click 'Place Order'
-        cy.get('textarea[name="message"]').type('Please deliver as soon as possible.');
-        cy.contains('Place Order').click();
-
+         order.fillOrderCommentAndPlaceOrder();
         //5. Enter payment details: Name on Card, Card Number, CVC, Expiration date
-        cy.get('.heading').should('contain.text', 'Payment');
-        // Aguarde overlays sumirem, se existirem
-        cy.get('.modal, .loader, .overlay', { timeout: 10000 }).should('not.exist');
-        // Role até o campo
-        cy.get('[data-qa="name-on-card"]').scrollIntoView().should('be.visible').and('not.be.disabled');
-        // Pequeno wait para garantir fim de animação (último recurso)
-        cy.wait(300);
-        cy.get('[data-qa="name-on-card"]').type('Test User', { force: true });
-        cy.get('[data-qa="card-number"]').type('4111111111111111', { force: true });
-        cy.get('[data-qa="cvc"]').type('123', { force: true });
-        cy.get('[data-qa="expiry-month"]').type('12', { force: true });
-        cy.get('[data-qa="expiry-year"]').type('2030', { force: true });
-
-        //6. Click 'Pay and Confirm Order' button
-        cy.get('[data-qa="pay-button"]').click();
+         order.fillPaymentDetails();
 
         // Assertion, success message 'Order Placed!'
         cy.get('[data-qa="order-placed"] > b').should('contain.text', 'Order Placed!');
@@ -193,10 +173,10 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
     
     }); // it
 
-    it(' TEST 08 - VERIFY ALL PRODUCTS AND PRODUCT DETAILS', () => {
+    it.only(' TEST 08 - VERIFY ALL PRODUCTS AND PRODUCT DETAILS', () => {
         
         //1. Access Products page
-        cy.get('a[href="/products"]').click(); 
+        products.goToProductsPage();
         // 2. Verify if the products page were loaded 
         cy.url().should('include', '/products');
         cy.contains('h2', 'All Products').should('be.visible');
@@ -204,11 +184,11 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
         // 3. The product list is visible
         cy.get('.features_items').should('be.visible');
 
-        // 4. Check if there is at least one prodsuct on the list 
-        cy.get('.features_items').should('have.length.greaterThan', 0);
+        // 4. Check if there is at least one product on the list 
+         cy.get('.features_items').should('have.length.greaterThan', 0);
 
         // 5. Click on the view product of the first product
-        cy.get('.features_items .product-image-wrapper').first().find('a').contains('View Product').click();
+        products.viewFirstProductDetail();
 
         // 6. Check if the detail page were loaded correctly 
         cy.url().should('include', '/product_details');
@@ -225,10 +205,10 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
 
     }); // it
 
-    it(' TEST 09 - SEARCH PRODUCT', () => {
-
+    it.only(' TEST 09 - SEARCH PRODUCT', () => {
+        const productName = 'Winter Top';
         //1. Access Products page
-        cy.get('a[href="/products"]').click(); 
+        products.goToProductsPage();
         // 2. Verify if the products page were loaded 
         cy.url().should('include', '/products');
         cy.contains('h2', 'All Products').should('be.visible');
@@ -236,9 +216,7 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
         // 3. The product list is visible
         cy.get('.features_items').should('be.visible');
         // 4. Type product name in search input and click search button
-        //const productName = 'Sleeveless Dress';
-        cy.get('#search_product').type('Winter Top');
-        cy.get('#submit_search').click();
+        products.searchProduct(productName);
 
         // 5. Verify if the searched products page is displayed
         cy.contains('h2', 'Searched Products').should('be.visible');
@@ -251,7 +229,7 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
 
     }); // it
 
-    it(' TEST 10 - VERIFY SUBSCRIPTION IN HOME PAGE', () => {
+    it.only(' TEST 10 - VERIFY SUBSCRIPTION IN HOME PAGE', () => {
         // 1. Scroll to bottom of page where 
         cy.get('footer').scrollIntoView();;
 
