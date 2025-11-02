@@ -13,7 +13,7 @@ import register from '../modules/register/index.js';
 import contact from '../modules/contact';
 
 
-describe('Automation Exercise Testing Register/Logged In', () => {
+describe('Automation Exercise Testing that need Register/Logged In', () => {
 
     beforeEach(() => {
         //Runs before each test in the block
@@ -98,7 +98,7 @@ describe('Automation Exercise Testing Register/Logged In', () => {
 
 }); // describe
 
-describe('Automation Exercise Testing Not Logged In', () => {
+describe('Automation Exercise Testing Without the need to be Logged In', () => {
 
     beforeEach(() => {
         //Runs before each test in the block
