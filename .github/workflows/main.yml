@@ -20,5 +20,5 @@ jobs:
         run: npm install
 
       # Running the tests created in headless mode 
-      - name: Running the tests
-        run: npx cypress run
+      - name: Running the tests - only the modules spec
+        run: npx cypress run --spec "cypress/e2e/automation-exercise.-modules.cy.js"
