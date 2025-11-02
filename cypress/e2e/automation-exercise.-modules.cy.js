@@ -98,7 +98,7 @@ describe('Automation Exercise Testing that need Register/Logged In page', () => 
     
     }); // it
 
-    it.only(' TEST 15 - PLACE ORDER: REGISTER BEFORE CHECKOUT', () => {
+    it(' TEST 15 - PLACE ORDER: REGISTER BEFORE CHECKOUT', () => {
         //First screen for register        
         login.FillPreRegisterUser();
         //Second screen for register - Enter Account Information
@@ -173,7 +173,7 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
     
     }); // it
 
-    it.only(' TEST 08 - VERIFY ALL PRODUCTS AND PRODUCT DETAILS', () => {
+    it(' TEST 08 - VERIFY ALL PRODUCTS AND PRODUCT DETAILS', () => {
         
         //1. Access Products page
         products.goToProductsPage();
@@ -205,7 +205,7 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
 
     }); // it
 
-    it.only(' TEST 09 - SEARCH PRODUCT', () => {
+    it(' TEST 09 - SEARCH PRODUCT', () => {
         const productName = 'Winter Top';
         //1. Access Products page
         products.goToProductsPage();
@@ -229,7 +229,7 @@ describe('Automation Exercise Testing Without the need to be Login page', () => 
 
     }); // it
 
-    it.only(' TEST 10 - VERIFY SUBSCRIPTION IN HOME PAGE', () => {
+    it(' TEST 10 - VERIFY SUBSCRIPTION IN HOME PAGE', () => {
         // 1. Scroll to bottom of page where 
         cy.get('footer').scrollIntoView();;
 
