@@ -22,3 +22,14 @@ jobs:
       # Running the tests created in headless mode 
       - name: Running the tests - only the modules spec
         run: npx cypress run --spec "cypress/e2e/automation-exercise.-modules.cy.js"
+      
+      # Upload reports as artifacts
+      - name: Upload Cypress Reports
+        uses: actions/upload-artifact@v4
+        if: ${{!cancelled()}}
+        with:
+          name: reports
+          path: |
+            cypress/reports
+            cypress/screenshots
+            cypress/videos
